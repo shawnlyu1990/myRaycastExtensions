@@ -1,0 +1,134 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "myiptools",
+  "title": "myiptools",
+  "description": "My IP tools",
+  "icon": "command-icon.png",
+  "author": "lyuzongshun",
+  "categories": [
+    "Developer Tools"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "myip",
+      "title": "显示当前IP",
+      "description": "显示当前本机和公网的IP地址及相关信息",
+      "keywords": [
+        "internet"
+      ],
+      "mode": "view"
+    },
+    {
+      "name": "long2ip",
+      "title": "数值转IP",
+      "description": "将二进制、八进制、十进制或十六进制的数值转换成IP地址",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "请输入数值",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ip2long",
+      "title": "IP转数值",
+      "description": "将IPv4或IPv6地址转换成二进制、十进制、十六进制的数值",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "IP地址",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "parseIPRange",
+      "title": "网络和IP地址计算器",
+      "description": "显示IP地址范围、掩码、网络地址、广播地址、第一个可用地址、最后一个可用地址等信息",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "IP地址/掩码",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ipv4toIPv6Format",
+      "title": "将IPv4地址转换成IPv6格式",
+      "description": "将IPv4地址转换成IPv6格式",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "IPv4地址",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "toIPv6Expand",
+      "title": "IPv6地址的压缩、扩展",
+      "description": "将IPv6地址压缩成简短形式，或扩展成完整形式",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "IPv6地址",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "geoLocation",
+      "title": "查询IPv4或IPv6地址的位置信息",
+      "description": "查询IPv4或IPv6地址的位置信息",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "IP地址",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.70.2",
+    "@raycast/utils": "^1.13.3",
+    "axios": "^1.6.8",
+    "cheerio": "1.0.0-rc.12",
+    "ip": "^2.0.1",
+    "ip-toolkit": "^1.0.11",
+    "json-bigint": "^1.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.6",
+    "@types/ip": "^1.1.3",
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.27",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "react-devtools": "^4.28.4",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
