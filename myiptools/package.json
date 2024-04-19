@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "myiptools",
   "title": "myiptools",
-  "description": "My IP tools",
+  "description": "常用IP工具集",
   "icon": "command-icon.png",
   "author": "lyuzongshun",
   "categories": [
@@ -20,7 +20,7 @@
       "mode": "view"
     },
     {
-      "name": "long2ip",
+      "name": "convertLong2IP",
       "title": "数值转IP",
       "description": "将二进制、八进制、十进制或十六进制的数值转换成IP地址",
       "mode": "view",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "name": "ip2long",
+      "name": "convertIP2Long",
       "title": "IP转数值",
       "description": "将IPv4或IPv6地址转换成二进制、十进制、十六进制的数值",
       "mode": "view",
@@ -49,7 +49,7 @@
     },
     {
       "name": "parseIPRange",
-      "title": "网络和IP地址计算器",
+      "title": "IP地址计算器",
       "description": "显示IP地址范围、掩码、网络地址、广播地址、第一个可用地址、最后一个可用地址等信息",
       "mode": "view",
       "arguments": [
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "ipv4toIPv6Format",
+      "name": "convertIPv4toIPv6",
       "title": "将IPv4地址转换成IPv6格式",
       "description": "将IPv4地址转换成IPv6格式",
       "mode": "view",
@@ -98,6 +98,20 @@
         {
           "name": "keywork",
           "placeholder": "IP地址",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "convertMask",
+      "title": "掩码计算器",
+      "description": "子网掩码和CIDR掩码互相转换",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "keywork",
+          "placeholder": "CIDR掩码或子网掩码",
           "type": "text",
           "required": false
         }
