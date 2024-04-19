@@ -1,15 +1,14 @@
-import { Action, ActionPanel, Icon, List, useNavigation } from "@raycast/api";
+import { Action, ActionPanel, Icon, List, useNavigation, environment } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
-import { address } from "ip";
+import { address, mask, cidr, subnet } from "ip";
 import { useState } from "react";
-
 import IPLookUp from "./myiplookup";
-import { headers } from "./util";
 
 export default function Command() {
   const { pop } = useNavigation();
-  const [localIp] = useState(() => address("public", "ipv4").toString());
-
+  const [WiredIP] = useState(() => address(undefined, "ipv4").toString());
+  //const [WiFiIP] = useState(() => address("en0", "ipv4").toString());
+  const headers: HeadersInit = { "User-Agent": `Raycast/${environment.raycastVersion} (https://raycast.com)`, };
   const { isLoading, data, error, revalidate } = useFetch<string>("https://api64.ipify.org", {
     headers,
     keepPreviousData: true,
@@ -19,18 +18,18 @@ export default function Command() {
     <List isLoading={isLoading}>
       <List.Item
         icon={Icon.Desktop}
-        title={localIp}
+        title={WiredIP}
         actions={
-          !!localIp && (
+          !!WiredIP && (
             <ActionPanel>
               <Action.CopyToClipboard
-                content={localIp}
+                content={WiredIP}
                 onCopy={() => {
                   pop();
                 }}
               />
               <Action
-                title="Refresh"
+                title="刷新"
                 onAction={() => revalidate()}
                 icon={Icon.Repeat}
                 shortcut={{ key: "r", modifiers: ["cmd"] }}
@@ -40,25 +39,23 @@ export default function Command() {
         }
         accessories={[
           {
-            text: "本地IP",
+            text: "有线网卡IP",
           },
         ]}
       />
       <List.Item
-        subtitle={!data && isLoading ? "Loading..." : error ? "Failed to load" : undefined}
+        subtitle={!data && isLoading ? "加载中..." : error ? "加载失败" : undefined}
         icon={Icon.Globe}
-        title={data || "Loading..."}
+        title={data || "加载中..."}
         actions={
           !isLoading && !!data ? (
             <ActionPanel>
-              <Action.CopyToClipboard
-                content={data}
-                onCopy={() => {
-                  pop();
-                }}
+              <Action.Push 
+                title="查看公网IP更多信息" 
+                target={<IPLookUp ip={data}/>}
               />
               <Action
-                title="Refresh"
+                title="刷新"
                 onAction={() => revalidate()}
                 icon={Icon.Repeat}
                 shortcut={{ key: "r", modifiers: ["cmd"] }}
@@ -72,25 +69,6 @@ export default function Command() {
           },
         ]}
       />
-      {!isLoading && !error && !!data ? (
-        <>
-          <List.Item
-            icon={data === "" ? "" : Icon.Eye}
-            title=""
-            subtitle="更多信息"
-            actions={
-              <ActionPanel>
-                <Action.Push title="查看公网IP更多信息" target={<IPLookUp ip={data} />} icon={Icon.Eye} />
-              </ActionPanel>
-            }
-            accessories={[
-              {
-                text: "查看公网IP更多信息",
-              },
-            ]}
-          />
-        </>
-      ) : null}
     </List>
   );
 }

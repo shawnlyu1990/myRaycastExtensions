@@ -1,7 +1,5 @@
-import { ActionPanel, Action, useNavigation, List, Icon } from "@raycast/api";
+import { ActionPanel, Action, useNavigation, List, Icon, environment } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
-
-import { headers } from "./util";
 
 type IPData = {
   ip: string;
@@ -34,33 +32,33 @@ type IPData = {
 };
 
 const showItems: Partial<Record<keyof IPData, string>> = {
-  ip: "IP Address",
-  network: "Network",
-  version: "IP Version",
-  city: "City",
-  region: "Region",
-  region_code: "Region Code",
-  country: "Country",
-  country_name: "Country",
-  country_code: "Country Code",
-  postal: "Postal Code",
-  in_eu: "European Union",
-  latitude: "Latitude",
-  longitude: "Longitude",
-  timezone: "Time Zone",
-  utc_offset: "UTC Offset",
-  country_calling_code: "Calling Code",
-  currency: "Currency",
-  languages: "Languages",
-  country_area: "Country Area",
-  country_population: "Population",
+  ip: "IP地址",
+  network: "网络",
+  version: "IP协议版本",
+  city: "城市",
+  region: "地区",
+  region_code: "地区代码",
+  country: "国家（简写）",
+  country_name: "国家",
+  country_code: "国家代码",
+  postal: "邮政编码",
+  in_eu: "欧盟",
+  latitude: "纬度",
+  longitude: "经度",
+  timezone: "时区",
+  utc_offset: "与UTC的差值",
+  country_calling_code: "国际区号",
+  currency: "货币",
+  languages: "语言",
+  country_area: "国土面积",
+  country_population: "国家人口",
   asn: "ASN",
-  org: "Org",
+  org: "ISP提供商",
 };
 
 export default function IPLookUp({ ip }: { ip: string }) {
   const { pop } = useNavigation();
-
+  const headers: HeadersInit = { "User-Agent": `Raycast/${environment.raycastVersion} (https://raycast.com)`, };
   const { isLoading, data, revalidate } = useFetch<IPData>(`https://ipapi.co/${ip}/json/`, {
     headers,
     keepPreviousData: true,
@@ -92,7 +90,7 @@ export default function IPLookUp({ ip }: { ip: string }) {
               actions={
                 <ActionPanel>
                   <Action.CopyToClipboard
-                    title={`Copy ${showItems[keyName]}`}
+                    title={`复制 ${showItems[keyName]} 到剪贴板`}
                     content={data && data[keyName] ? data[keyName].toString() : ""}
                   />
                   <Action.OpenInBrowser
@@ -102,7 +100,7 @@ export default function IPLookUp({ ip }: { ip: string }) {
                     }}
                   />
                   <Action
-                    title="Refresh"
+                    title="刷新"
                     onAction={() => revalidate()}
                     icon={Icon.Repeat}
                     shortcut={{ key: "r", modifiers: ["cmd"] }}
