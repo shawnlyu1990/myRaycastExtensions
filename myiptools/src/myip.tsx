@@ -1,29 +1,37 @@
 import { Action, ActionPanel, Icon, List, useNavigation, environment } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import IPLookUp from "./myiplookup";
-import { InterfaceDetailv4, InterfaceDetailv6 } from "./interfaceDetail";
 import os from "os";
 
 export default function Command() {
-  const { pop } = useNavigation();
   const interfaces = os.networkInterfaces();
-  let WiredIPv4;
-  let WiredIPv6;
-  let WiFiIPv4;
-  let WiFiIPv6;
+  let WiredIPv4 = [];
+  let WiredIPv6 = [];
+  let WiFiIPv4 = [];
+  let WiFiIPv6 = [];
   if (interfaces.en6 !== undefined) {
-    WiredIPv4 = interfaces.en6[0].family === "IPv4" ? interfaces.en6[0].address : interfaces.en6[1].address;
-    WiredIPv6 = interfaces.en6[0].family === "IPv6" ? interfaces.en6[0].address : interfaces.en6[1].address;
+    for (let i=0;i<interfaces.en6.length;i++){
+      if (interfaces.en6[i].family === "IPv4") {
+        WiredIPv4.push(interfaces.en6[i].cidr);
+      }else if (interfaces.en6[i].family === "IPv6") {
+        WiredIPv6.push(interfaces.en6[i].cidr);
+      }
+    }
   } else {
-    WiredIPv4 = "网卡未启用";
-    WiredIPv6 = "网卡未启用";
+    WiredIPv4.push("网卡未启用");
+    WiredIPv6.push("网卡未启用");
   }
   if (interfaces.en0 !== undefined) {
-    WiFiIPv4 = interfaces.en0[0].family === "IPv4" ? interfaces.en0[0].address : interfaces.en0[1].address;
-    WiFiIPv6 = interfaces.en0[0].family === "IPv6" ? interfaces.en0[0].address : interfaces.en0[1].address;
+    for (let i=0;i<interfaces.en0.length;i++){
+      if (interfaces.en0[i].family === "IPv4") {
+        WiFiIPv4.push(interfaces.en0[i].cidr);
+      }else if (interfaces.en0[i].family === "IPv6") {
+        WiFiIPv6.push(interfaces.en0[i].cidr);
+      }
+    }
   } else {
-    WiFiIPv4 = "网卡未启用";
-    WiFiIPv6 = "网卡未启用";
+    WiFiIPv4.push("网卡未启用");
+    WiFiIPv6.push("网卡未启用");
   }
   const headers: HeadersInit = { "User-Agent": `Raycast/${environment.raycastVersion} (https://raycast.com)`, };
   const { isLoading, data, error, revalidate } = useFetch<string>("https://api64.ipify.org", {
@@ -32,75 +40,91 @@ export default function Command() {
   });
 
   return (
-    <List isLoading={isLoading}>
-      <List.Item
-        icon={Icon.Desktop}
-        title={WiredIPv4}
-        actions={
-          !!WiredIPv4 && (
+    <List>
+      {WiredIPv4.map((value) => (
+        <List.Item
+          icon={Icon.Desktop}
+          title={`${value}`}
+          subtitle={`${interfaces.en6 !== undefined ? interfaces.en6[0].mac : "网卡未启用"}`}
+          actions={
             <ActionPanel>
-              <Action.Push title="查看有线网卡更多信息" target={<InterfaceDetailv4 interfaceName="en6"/>} />
-              <Action title="刷新" onAction={() => revalidate()} icon={Icon.Repeat} shortcut={{ key: "r", modifiers: ["cmd"] }} />
+              <Action.CopyToClipboard title="复制到剪贴板" content={`${value}`} />
+              <Action.CopyToClipboard
+                title="复制全部内容到剪贴板"
+                content={JSON.stringify(WiredIPv4, null, 2)}
+              />
             </ActionPanel>
-          )
-        }
-        accessories={[
-          {
-            text: "有线网卡IPv4地址",
-          },
-        ]}
-      />
-      <List.Item
-        icon={Icon.Desktop}
-        title={WiredIPv6}
-        actions={
-          !!WiredIPv6 && (
+          }
+          accessories={[
+            {
+              text: "有线网卡（en6）IPv4地址",
+            },
+          ]}
+        />
+      ))}
+      {WiredIPv6.map((value) => (
+        <List.Item
+          icon={Icon.Desktop}
+          title={`${value}`}
+          subtitle={`${interfaces.en6 !== undefined ? interfaces.en6[0].mac : "网卡未启用"}`}
+          actions={
             <ActionPanel>
-              <Action.Push title="查看有线网卡更多信息" target={<InterfaceDetailv6 interfaceName="en6"/>} />
-              <Action title="刷新" onAction={() => revalidate()} icon={Icon.Repeat} shortcut={{ key: "r", modifiers: ["cmd"] }} />
+              <Action.CopyToClipboard title="复制到剪贴板" content={`${value}`} />
+              <Action.CopyToClipboard
+                title="复制全部内容到剪贴板"
+                content={JSON.stringify(WiredIPv6, null, 2)}
+              />
             </ActionPanel>
-          )
-        }
-        accessories={[
-          {
-            text: "有线网卡IPv6地址",
-          },
-        ]}
-      />
-      <List.Item
-        icon={Icon.Wifi}
-        title={WiFiIPv4}
-        actions={
-          !!WiFiIPv4 && (
+          }
+          accessories={[
+            {
+              text: "有线网卡（en6）IPv6地址",
+            },
+          ]}
+        />
+      ))}
+      {WiFiIPv4.map((value) => (
+        <List.Item
+          icon={Icon.Wifi}
+          title={`${value}`}
+          subtitle={`${interfaces.en0 !== undefined ? interfaces.en0[0].mac : "网卡未启用"}`}
+          actions={
             <ActionPanel>
-              <Action.Push title="查看无线网卡更多信息" target={<InterfaceDetailv4 interfaceName="en0"/>} />
-              <Action title="刷新" onAction={() => revalidate()} icon={Icon.Repeat} shortcut={{ key: "r", modifiers: ["cmd"] }} />
+              <Action.CopyToClipboard title="复制到剪贴板" content={`${value}`} />
+              <Action.CopyToClipboard
+                title="复制全部内容到剪贴板"
+                content={JSON.stringify(WiFiIPv4, null, 2)}
+              />
             </ActionPanel>
-          )
-        }
-        accessories={[
-          {
-            text: "无线网卡IPv4地址",
-          },
-        ]}
-      />
-      <List.Item
-        icon={Icon.Wifi}
-        title={WiFiIPv6}
-        actions={
-          !!WiFiIPv6 && (
+          }
+          accessories={[
+            {
+              text: "无线网卡（en0）IPv4地址",
+            },
+          ]}
+        />
+      ))}
+      {WiFiIPv6.map((value) => (
+        <List.Item
+          icon={Icon.Wifi}
+          title={`${value}`}
+          subtitle={`${interfaces.en0 !== undefined ? interfaces.en0[0].mac : "网卡未启用"}`}
+          actions={
             <ActionPanel>
-              <Action.Push title="查看无线网卡更多信息" target={<InterfaceDetailv6 interfaceName="en0"/>} />
-              <Action title="刷新" onAction={() => revalidate()} icon={Icon.Repeat} shortcut={{ key: "r", modifiers: ["cmd"] }} />
+              <Action.CopyToClipboard title="复制到剪贴板" content={`${value}`} />
+              <Action.CopyToClipboard
+                title="复制全部内容到剪贴板"
+                content={JSON.stringify(WiFiIPv6, null, 2)}
+              />
             </ActionPanel>
-          )
-        }
-        accessories={[
-          {
-            text: "无线网卡IPv6地址",
-          },
-        ]}
-      />
+          }
+          accessories={[
+            {
+              text: "无线网卡（en0）IPv6地址",
+            },
+          ]}
+        />
+      ))}
       <List.Item
         subtitle={!data && isLoading ? "加载中..." : error ? "加载失败" : undefined}
         icon={Icon.Globe}
