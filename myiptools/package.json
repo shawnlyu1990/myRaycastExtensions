@@ -127,7 +127,8 @@
     "ip-toolkit": "^1.0.11",
     "json-bigint": "^1.0.0",
     "node-cmd": "^5.0.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "ua-parser-js": "^1.0.37"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",
