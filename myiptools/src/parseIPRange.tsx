@@ -12,10 +12,16 @@ export default function Command(props: { arguments: { keywork: string } }) {
   const IP = searchText.split("/", 2)[0];
   const MASK = searchText.split("/", 2)[1];
   let CIDRMASK:string = "";
-  if (/^(254|252|248|240|224|192|128|0)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(255|254|252|248|240|224|192|128|0)$/.test(MASK)) {
-    CIDRMASK = IPv4.toMaskLength(MASK).toString();
-  } else if (/^(([0-2]?[0-9])|30|31|32)$/.test(MASK)) {
-    CIDRMASK = MASK.toString();
+  if (version == "IPv4") {
+    if (/^(254|252|248|240|224|192|128|0)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(255|254|252|248|240|224|192|128|0)$/.test(MASK)) {
+      CIDRMASK = IPv4.toMaskLength(MASK).toString();
+    } else if (/^(([0-2]?[0-9])|30|31|32)$/.test(MASK)) {
+      CIDRMASK = MASK.toString();
+    }
+  } else if (version == "IPv6") {
+    if (/^0?\d|[1-9]\d|1([0-1]\d|2[0-8])$/.test(MASK)) {
+      CIDRMASK = MASK.toString();
+    }
   }
   const isValid = isEmpty ? false : version === "IPv4" ? IPv4.isCIDR(IP + "/" + CIDRMASK) : IPv6.isCIDR(IP + "/" + CIDRMASK);
   const convertResult = isValid ? (version === "IPv4" ? IPv4.parseCIDR(IP + "/" + CIDRMASK) : IPv6.parseCIDR(IP + "/" + CIDRMASK)) : {};
