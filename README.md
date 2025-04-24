@@ -38,8 +38,7 @@
 
 2. 打开 Raycast 输入命令 `Import Extension`，选择 myiptools 扩展的根目录。
 
-   > [!NOTE]
-   > 例如，我这里将 myRaycastExtensions 项目克隆到了 `/User/zhangsan/Github/` 目录中，导入的 myiptools 工具的时候就选择 `/Users/zhangsan/Github/myRaycastExtensions/myiptools` 目录。
+   例如，我这里将 myRaycastExtensions 项目克隆到了 `/User/zhangsan/Github/` 目录中，导入的 myiptools 工具的时候就选择 `/Users/zhangsan/Github/myRaycastExtensions/myiptools` 目录。
 
 3. 打开终端, 移动到 对应扩展(myiptools) 的根目录路径下执行
 
