@@ -12,23 +12,10 @@
 
 > [!IMPORTANT]
 > **声明与致谢**
+>
 > 本扩展的部分功能代码参考了 Raycast 扩展商店中的 ip-tools 扩展。
+>
 > [Raycast Store: IP Tools](https://www.raycast.com/meguoe/ip-tools)
-
-> [!NOTE]  
-> Highlights information that users should take into account, even when skimming.
-
-> [!TIP]
-> Optional information to help a user be more successful.
-
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> Negative potential consequences of an action.
 
 包含以下功能：
 
@@ -51,9 +38,8 @@
 
 2. 打开 Raycast 输入命令 `Import Extension`，选择 myiptools 扩展的根目录。
 
-    > [!NOTE]
-    >
-    > 例如，我这里将 myRaycastExtensions 项目克隆到了 `/User/zhangsan/Github/` 目录中，导入的 myiptools 工具的时候就选择 `/Users/zhangsan/Github/myRaycastExtensions/myiptools` 目录。
+   > [!NOTE]
+   > 例如，我这里将 myRaycastExtensions 项目克隆到了 `/User/zhangsan/Github/` 目录中，导入的 myiptools 工具的时候就选择 `/Users/zhangsan/Github/myRaycastExtensions/myiptools` 目录。
 
 3. 打开终端, 移动到 对应扩展(myiptools) 的根目录路径下执行
 
