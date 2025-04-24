@@ -10,9 +10,25 @@
 
 ## myiptools 工具
 
-> [!important] 声明与致谢
+> [!IMPORTANT]
+> **声明与致谢**
 > 本扩展的部分功能代码参考了 Raycast 扩展商店中的 ip-tools 扩展。
 > [Raycast Store: IP Tools](https://www.raycast.com/meguoe/ip-tools)
+
+> [!NOTE]  
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
 
 包含以下功能：
 
